@@ -1,0 +1,50 @@
+#!/bin/sh
+#
+# this is a fake pkg-config since ffmpeg requires pkg-config if you want to
+# include external libraries like libfreetype or libass.  The Android NDK does
+# not provide any kind of pkg-config.
+
+NAME="mp3lame"
+
+case $1 in
+    --exists)
+        if [ $3 = "mp3lame" ]; then
+            exit 0
+        elif [ $3 = "openh264" ]; then
+            NAME="openh264" 
+            exit 0
+        elif [ $3 = "openssl" ]; then
+            NAME="openssl" 
+        elif [ $3 = "librtmp" ]; then
+            NAME="librtmp" 
+            exit 0
+        else
+            exit 1
+        fi
+        ;;
+    --cflags)
+        if [ ${NAME} = "mp3lame" ]; then
+            echo "-I${MP3_INCLUDE}"
+        elif [ ${NAME} = "openh264" ]; then 
+            echo "-I${OPENH264_INCLUDE}"
+        elif [ ${NAME} = "openssl" ]; then 
+            echo "-I${OPENSSL_INCLUDE}"
+        elif [ ${NAME} = "librtmp" ]; then 
+            echo "-I${RTMP_INCLUDE}"
+        fi
+        ;;
+    --libs)
+	if [ ${NAME} = "mp3lame" ]; then
+            echo "-L${MP3_LIBRARY} -lm -lmp3lame"
+        elif [ ${NAME} = "openh264" ]; then 
+            echo "-L${OPENH264_LIBRARY} -lopenh264"
+        elif [ ${NAME} = "openssl" ]; then 
+            echo "-L${OPENSSL_LIBRARY} -lssl -lcrypto"
+        elif [ ${NAME} = "librtmp" ]; then 
+            echo "-L${RTMP_LIBRARY} -lrtmp"
+        fi
+        ;;
+    *)
+        echo "fake pkg-config for Android NDK build!"
+        ;;
+esac
