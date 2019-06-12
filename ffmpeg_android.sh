@@ -62,7 +62,7 @@ export OPENSSL_LIBRARY="${HOME}/Documents/openssl/builded/${LIBRARY_TARGET_ABI}/
 #output dir
 PREFIX=$(pwd)/../build/${LIBRARY_TARGET_ABI}
 
-export PKG_CONFIG_PATH="$(pwd)/fake_pkg_config"
+export PKG_CONFIG_PATH="$(pwd)/pkg_config"
 
 ARM_INCLUDE=${NDK_ROOT}/sysroot/usr/include
 
